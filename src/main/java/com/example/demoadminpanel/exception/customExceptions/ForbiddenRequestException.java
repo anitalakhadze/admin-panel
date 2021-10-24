@@ -1,4 +1,4 @@
-package com.example.demoadminpanel.exception;
+package com.example.demoadminpanel.exception.customExceptions;
 
 public class ForbiddenRequestException extends RuntimeException{
     public ForbiddenRequestException(String message) {
