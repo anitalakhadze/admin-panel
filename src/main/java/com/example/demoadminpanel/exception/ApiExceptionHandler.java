@@ -1,6 +1,7 @@
 package com.example.demoadminpanel.exception;
 
 import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
+import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,11 +29,5 @@ public class ApiExceptionHandler {
     @ResponseStatus(value = HttpStatus.FORBIDDEN)
     public ErrorMessage resourceNotFoundException(ForbiddenRequestException ex) {
         return new ErrorMessage(new Date(), ex.getMessage(), HttpStatus.FORBIDDEN);
-    }
-
-    public static class ResourceAlreadyExistsException extends RuntimeException{
-        public ResourceAlreadyExistsException(String message) {
-            super(message);
-        }
     }
 }

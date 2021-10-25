@@ -1,5 +1,6 @@
-package com.example.demoadminpanel.user;
+package com.example.demoadminpanel.user.entity;
 
+import com.example.demoadminpanel.user.model.enums.UserRole;
 import lombok.Data;
 
 import javax.persistence.*;

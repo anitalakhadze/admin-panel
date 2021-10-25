@@ -1,6 +1,6 @@
-package com.example.demoadminpanel.user.models;
+package com.example.demoadminpanel.user.model;
 
-import com.example.demoadminpanel.user.UserRole;
+import com.example.demoadminpanel.user.model.enums.UserRole;
 import lombok.Data;
 
 @Data

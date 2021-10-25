@@ -1,6 +1,6 @@
-package com.example.demoadminpanel.user.models;
+package com.example.demoadminpanel.user.model;
 
-import com.example.demoadminpanel.user.User;
+import com.example.demoadminpanel.user.entity.User;
 import lombok.*;
 
 @Data

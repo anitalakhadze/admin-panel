@@ -1,6 +1,7 @@
-package com.example.demoadminpanel.security;
+package com.example.demoadminpanel.security.authentication;
 
-import com.example.demoadminpanel.user.UserRole;
+import com.example.demoadminpanel.security.authentication.AuthenticationService;
+import com.example.demoadminpanel.user.model.enums.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.example.demoadminpanel.security;
+package com.example.demoadminpanel.security.authentication;
 
 import org.springframework.security.core.Authentication;
 
