@@ -8,6 +8,10 @@ import com.example.demoadminpanel.user.model.UserDetailedResponse;
 import com.example.demoadminpanel.user.model.UserListResponse;
 import org.springframework.data.domain.Page;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 public interface UserService {
     Page<UserListResponse> getUsers(int page, int size);
     UserDetailedResponse getUser(Long id) throws ResourceNotFoundException;
