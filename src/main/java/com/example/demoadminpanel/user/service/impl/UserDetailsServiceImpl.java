@@ -34,7 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userOptional.get();
         List<SimpleGrantedAuthority> authorityList = Collections
                 .singletonList(new SimpleGrantedAuthority(user.getRole().name()));
-        emailSender.send("atala15@freeuni.edu.ge", "user login", "User has logged in");
+        emailSender.send("atala15@freeuni.edu.ge", "USER LOGIN", String.format("%s has logged in your app!", user.getUsername().toUpperCase()));
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

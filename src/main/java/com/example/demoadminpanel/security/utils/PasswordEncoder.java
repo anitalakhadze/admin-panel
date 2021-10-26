@@ -1,4 +1,4 @@
-package com.example.demoadminpanel.security;
+package com.example.demoadminpanel.security.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
