@@ -18,8 +18,8 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class TokenUtils {
-    private static final int ACCESS_TOKEN_EXPIRATION_PERIOD = 10 * 60 * 1000;
-    private static final int REFRESH_TOKEN_EXPIRATION_PERIOD = 30 * 60 * 1000;
+    private static final int ACCESS_TOKEN_EXPIRATION_PERIOD = 30 * 60 * 1000;
+    private static final int REFRESH_TOKEN_EXPIRATION_PERIOD = 50 * 60 * 1000;
     private static final String ACCESS_TOKEN_HEADER_KEY = "access_token";
     private static final String REFRESH_TOKEN_HEADER_KEY = "refresh_token";
     private static final String SECRET_KEY = "someSecretKey";
