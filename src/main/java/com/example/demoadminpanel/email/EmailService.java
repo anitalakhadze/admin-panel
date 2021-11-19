@@ -18,11 +18,11 @@ public class EmailService implements EmailSender {
 
     @Override
     @Async
-    public void send(String to, String subject, String email) {
+    public void send(String to, String subject, String emailText) {
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
-            helper.setText(email, true);
+            helper.setText(emailText, true);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setFrom("hello@adminpaneldemo.ge");
