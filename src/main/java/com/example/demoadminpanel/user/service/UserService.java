@@ -1,11 +1,9 @@
 package com.example.demoadminpanel.user.service;
 
+import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
-import com.example.demoadminpanel.user.model.CreateUserRequest;
-import com.example.demoadminpanel.user.model.UpdateUserRequest;
-import com.example.demoadminpanel.user.model.UserDetailedResponse;
-import com.example.demoadminpanel.user.model.UserListResponse;
+import com.example.demoadminpanel.user.model.*;
 import org.springframework.data.domain.Page;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,4 +16,5 @@ public interface UserService {
     Long createUser(CreateUserRequest request) throws ResourceAlreadyExistsException;
     void updateUser(Long id, UpdateUserRequest request) throws ResourceNotFoundException;
     void deleteUser(Long id) throws ResourceNotFoundException;
+    void updatePassword(String username, ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, ForbiddenRequestException;
 }

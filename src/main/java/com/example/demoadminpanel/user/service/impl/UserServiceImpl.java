@@ -1,13 +1,11 @@
 package com.example.demoadminpanel.user.service.impl;
 
+import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.security.RevokeUserTokenEvent;
 import com.example.demoadminpanel.user.entity.User;
-import com.example.demoadminpanel.user.model.CreateUserRequest;
-import com.example.demoadminpanel.user.model.UpdateUserRequest;
-import com.example.demoadminpanel.user.model.UserDetailedResponse;
-import com.example.demoadminpanel.user.model.UserListResponse;
+import com.example.demoadminpanel.user.model.*;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import com.example.demoadminpanel.user.service.UserService;
 import lombok.AllArgsConstructor;
@@ -96,4 +94,18 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
         applicationEventPublisher.publishEvent(new RevokeUserTokenEvent(user.getUsername()));
     }
+
+    @Override
+    public void updatePassword(String username, ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, ForbiddenRequestException {
+        User user = userRepository
+                .findByUsername(username)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("User with username: %s not found", username)));
+        if (passwordEncoder.matches(changePasswordBean.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(changePasswordBean.getNewPassword()));
+            userRepository.save(user);
+        } else {
+            throw new ForbiddenRequestException("Passwords do not match!");
+        }
+    }
+
 }
