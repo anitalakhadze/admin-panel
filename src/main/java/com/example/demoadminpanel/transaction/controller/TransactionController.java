@@ -22,7 +22,7 @@ public class TransactionController {
     }
 
     @GetMapping("/{id}")
-    public TransactionBean getTransaction(@PathVariable Long id) {
+    public TransactionBean getTransaction(@PathVariable Long id) throws ResourceNotFoundException {
         return transactionService.getTransaction(id);
     }
 

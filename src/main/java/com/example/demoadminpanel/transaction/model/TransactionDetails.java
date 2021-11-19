@@ -9,5 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 public class TransactionDetails {
     private Long userId;
-    private Integer status;
+    private String paymentSource;
+    private String status;
 }

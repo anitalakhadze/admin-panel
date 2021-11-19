@@ -8,7 +8,7 @@ import java.util.List;
 public interface TransactionService {
 
     List<TransactionBean> getTransactions();
-    TransactionBean getTransaction(Long id);
-
+    TransactionBean getTransaction(Long id) throws ResourceNotFoundException;
     void cancelTransaction(Long transactionId, String username) throws ResourceNotFoundException;
+
 }

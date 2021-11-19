@@ -28,7 +28,35 @@ public class TransactionBean {
                 .dateCreated(transactionEntity.getDateCreated())
                 .details(TransactionDetails.builder()
                         .userId(transactionEntity.getUserId())
-                        .status(transactionEntity.getStatus()).build())
+                        .paymentSource(getPaymentMethod(transactionEntity.getMoneySource()))
+                        .status(getPaymentStatus(transactionEntity.getStatus())).build())
                 .build();
     }
+
+    private static String getPaymentMethod(Integer statusId) {
+        switch (statusId) {
+            case 1:
+                return "ბარათი";
+            case 2:
+                return "შენახული ბარათი";
+            case 3:
+                return "საფულე";
+            case 4:
+                return "ყულაბა";
+            default:
+                return "";
+        }
+    }
+
+    private static String getPaymentStatus(Integer status) {
+        switch (status) {
+            case 1:
+                return "წარმატებული";
+            case 4:
+                return "წარუმატებელი";
+            default:
+                return "პროცესშია";
+        }
+    }
+
 }

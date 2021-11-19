@@ -10,8 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,10 +28,10 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public TransactionBean getTransaction(Long id) {
-        Optional<Transaction> transactionOptional = transactionRepository.findById(id);
-        // TODO check
-        Transaction transaction = transactionOptional.get();
+    public TransactionBean getTransaction(Long id) throws ResourceNotFoundException {
+        Transaction transaction = transactionRepository
+                .findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(String.format("Transaction with ID %s was not found", id)));
         return TransactionBean.transformFromTransactionEntity(transaction);
     }
 
