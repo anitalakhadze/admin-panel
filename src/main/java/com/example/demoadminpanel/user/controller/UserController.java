@@ -13,36 +13,37 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @AllArgsConstructor
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/users")
+    @GetMapping()
     public Page<UserListResponse> getUsers(@RequestParam("page") int page, @RequestParam("size") int size) {
         return userService.getUsers(page, size);
     }
 
-    @GetMapping("/user/{id}")
+    @GetMapping("/{id}")
     public UserDetailedResponse getUser(@PathVariable("id") Long id) throws ResourceNotFoundException {
         return userService.getUser(id);
     }
 
-    @PostMapping("/user")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Long create(@RequestBody CreateUserRequest request) throws ResourceAlreadyExistsException {
         return userService.createUser(request);
     }
 
-    @PutMapping("/user/{id}")
+    @PutMapping("/{id}")
     public void update (@PathVariable("id") Long id, @RequestBody UpdateUserRequest request) throws ResourceNotFoundException {
         userService.updateUser(id, request);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long id) throws ResourceNotFoundException {
         userService.deleteUser(id);
     }
 
-    @PutMapping("/user/password/{username}")
+    @PutMapping("/password/{username}")
     public void updatePassword(@PathVariable("username") String username, @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, ForbiddenRequestException {
         userService.updatePassword(username, changePasswordBean);
     }

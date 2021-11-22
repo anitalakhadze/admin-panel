@@ -12,10 +12,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
     @SequenceGenerator(name = "user_id_generator", sequenceName = "user_id_sequence", allocationSize = 1)
     private Long id;
+    private String name;
     private String username;
     private String password;
     private String ipAddress;
     private String returnUrl;
     @Enumerated(EnumType.STRING)
     private UserRole role;
+    private Boolean isActive;
 }
