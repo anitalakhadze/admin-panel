@@ -1,6 +1,5 @@
 package com.example.demoadminpanel.security.authentication;
 
-import com.example.demoadminpanel.security.authentication.AuthenticationService;
 import com.example.demoadminpanel.user.model.enums.UserRole;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,6 +21,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .stream()
                 .anyMatch(grantedAuthority -> grantedAuthority
                                 .getAuthority()
-                                .equals(UserRole.ADMIN.name()));
+                                .equals(UserRole.ROLE_ADMIN.name()));
     }
 }

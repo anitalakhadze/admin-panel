@@ -7,6 +7,7 @@ import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,8 +19,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyBean> getActiveCompanies() {
-        List<User> companiesList = userRepository.findUsersByIsActiveIsTrue();
-        return companiesList
+        List<User> activeCompaniesList = userRepository.findUsersByIsActiveIsTrue();
+        return activeCompaniesList
                 .stream()
                 .map(CompanyBean::transformFromUser)
                 .collect(Collectors.toList());
@@ -27,8 +28,8 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyBean> getInactiveCompanies() {
-        List<User> companiesList = userRepository.findUsersByIsActiveIsFalse();
-        return companiesList
+        List<User> inactiveCompaniesList = userRepository.findUsersByIsActiveIsFalse();
+        return inactiveCompaniesList
                 .stream()
                 .map(CompanyBean::transformFromUser)
                 .collect(Collectors.toList());
@@ -53,6 +54,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
+    @Transactional
     public void saveAll(List<Long> companyIds) throws ResourceNotFoundException {
         if (companyIds != null && !companyIds.isEmpty()) {
             for (Long companyId: companyIds) {
@@ -63,7 +65,7 @@ public class CompanyServiceImpl implements CompanyService {
                 userRepository.save(user);
             }
         } else {
-            throw new ResourceNotFoundException("Company ID list was null or empty");
+            throw new RuntimeException("Company ID list was null or empty");
         }
     }
 }

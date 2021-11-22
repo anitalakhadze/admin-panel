@@ -23,7 +23,7 @@ public class TokenUtils {
     private static final long REFRESH_TOKEN_EXPIRATION_PERIOD = Duration.ofDays(30).toMillis();
     private static final String ACCESS_TOKEN_HEADER_KEY = "access_token";
     private static final String REFRESH_TOKEN_HEADER_KEY = "refresh_token";
-    private static final String SECRET_KEY = "someSecretKey";
+    private static final String SECRET_KEY = "GLoppaLIZATION";
     private static final String CLAIM_KEY = "roles";
     private static final String TOKEN_PREFIX = "Bearer ";
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY.getBytes(StandardCharsets.UTF_8));
