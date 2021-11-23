@@ -12,7 +12,7 @@ public class UserDetailedResponse extends UserListResponse{
     public static UserDetailedResponse fromUser(User user) {
         UserDetailedResponse userDetailedResponse = new UserDetailedResponse();
         userDetailedResponse.setId(user.getId());
-        userDetailedResponse.setUsername(user.getUsername());
+        userDetailedResponse.setName(user.getName());
         userDetailedResponse.setIpAddress(user.getIpAddress());
         userDetailedResponse.setReturnUrl(user.getReturnUrl());
         userDetailedResponse.setRole(user.getRole());

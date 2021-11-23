@@ -4,6 +4,7 @@ import com.example.demoadminpanel.user.model.enums.UserRole;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
@@ -20,4 +21,5 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserRole role;
     private Boolean isActive;
+    private Date addedAt;
 }

@@ -9,9 +9,10 @@ import org.springframework.data.domain.Page;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 public interface UserService {
-    Page<UserListResponse> getUsers(int page, int size);
+    List<UserListResponse> getUsers();
     UserDetailedResponse getUser(Long id) throws ResourceNotFoundException;
     Long createUser(CreateUserRequest request) throws ResourceAlreadyExistsException;
     void updateUser(Long id, UpdateUserRequest request) throws ResourceNotFoundException;

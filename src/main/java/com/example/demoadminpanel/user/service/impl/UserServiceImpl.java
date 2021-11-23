@@ -10,14 +10,14 @@ import com.example.demoadminpanel.user.repository.UserRepository;
 import com.example.demoadminpanel.user.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -28,16 +28,16 @@ public class UserServiceImpl implements UserService {
     private final ApplicationEventPublisher applicationEventPublisher;
 
     @Override
-//  @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Page<UserListResponse> getUsers(int page, int size) {
+    public List<UserListResponse> getUsers() {
         log.info("Getting All Users");
         return userRepository
-                .findAll(PageRequest.of(page, size))
-                .map(UserListResponse::fromUser);
+                .findAll()
+                .stream()
+                .map(UserListResponse::fromUser)
+                .collect(Collectors.toList());
     }
 
     @Override
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public UserDetailedResponse getUser(Long id) throws ResourceNotFoundException {
         log.info("Getting user with id: {}", id);
         return userRepository
@@ -47,7 +47,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Long createUser(CreateUserRequest request) throws ResourceAlreadyExistsException {
         log.info("Creating User");
         Optional<User> userOptional = userRepository.findByUsername(request.getUsername());
@@ -62,32 +61,24 @@ public class UserServiceImpl implements UserService {
         user.setIpAddress(request.getIpAddress());
         user.setReturnUrl(request.getReturnUrl());
         user.setIsActive(request.getStatus().name().equals("ACTIVE"));
+        user.setAddedAt(new Date());
         userRepository.save(user);
         return user.getId();
     }
 
     @Override
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void updateUser(Long id, UpdateUserRequest request) throws ResourceNotFoundException {
         log.info("Updating user with id: {}", id);
         User user = userRepository
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User with id: %s not found", id)));
-        String password = request.getPassword();
-        if (!StringUtils.isEmpty(password)) {
-            user.setPassword(passwordEncoder.encode(password));
-        }
-        if (request.getRole() != null) {
-            user.setRole(request.getRole());
-        }
+        user.setName(request.getName());
         user.setIpAddress(request.getIpAddress());
         user.setReturnUrl(request.getReturnUrl());
         userRepository.save(user);
-        applicationEventPublisher.publishEvent(new RevokeUserTokenEvent(user.getUsername()));
     }
 
     @Override
-//    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteUser(Long id) throws ResourceNotFoundException {
         log.info("Deleting user with id: {}", id);
         User user = userRepository
