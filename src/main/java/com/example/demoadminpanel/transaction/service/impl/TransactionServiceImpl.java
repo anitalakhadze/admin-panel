@@ -4,11 +4,14 @@ import com.example.demoadminpanel.email.EmailSender;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.entity.Transaction;
 import com.example.demoadminpanel.transaction.model.TransactionBean;
+import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
 import com.example.demoadminpanel.transaction.repository.TransactionRepository;
 import com.example.demoadminpanel.transaction.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,26 @@ public class TransactionServiceImpl implements TransactionService {
                 .stream()
                 .map(TransactionBean::transformFromTransactionEntity)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TransactionBean> getFilteredTransactions(TransactionSearchInfoBean transactionSearchInfoBean) {
+        Date startDate = transactionSearchInfoBean.getStartDate();
+        Date endDate = transactionSearchInfoBean.getEndDate();
+
+        List<Long> companyIds = transactionSearchInfoBean.getCompanyIds();
+        if (!companyIds.isEmpty()) {
+            return transactionRepository
+                    .getTransactionsByCompanyIdAndRange(companyIds, startDate, endDate)
+                    .stream()
+                    .map(TransactionBean::transformFromTransactionEntity)
+                    .collect(Collectors.toList());        } else {
+            return transactionRepository
+                    .getTransactionsByRange(startDate, endDate)
+                    .stream()
+                    .map(TransactionBean::transformFromTransactionEntity)
+                    .collect(Collectors.toList());
+        }
     }
 
     @Override

@@ -33,7 +33,7 @@ public class TransactionBean {
                 .build();
     }
 
-    private static String getPaymentMethod(Integer statusId) {
+    public static String getPaymentMethod(Integer statusId) {
         switch (statusId) {
             case 1:
                 return "ბარათი";
@@ -48,7 +48,7 @@ public class TransactionBean {
         }
     }
 
-    private static String getPaymentStatus(Integer status) {
+    public static String getPaymentStatus(Integer status) {
         switch (status) {
             case 1:
                 return "წარმატებული";

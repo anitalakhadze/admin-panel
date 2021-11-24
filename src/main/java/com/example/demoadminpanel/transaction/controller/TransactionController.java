@@ -1,13 +1,17 @@
 package com.example.demoadminpanel.transaction.controller;
 
+import com.example.demoadminpanel.excel.ExcelService;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.model.TransactionBean;
+import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
 import com.example.demoadminpanel.transaction.service.TransactionService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -15,14 +19,21 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/transactions")
 public class TransactionController {
-
     private final TransactionService transactionService;
+    private final ExcelService excelService;
 
     @GetMapping()
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
     public List<TransactionBean> getTransactions() {
         return transactionService.getTransactions();
+    }
+
+    @PostMapping("/filtered")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public List<TransactionBean> getFilteredTransactions(@RequestBody TransactionSearchInfoBean transactionSearchInfoBean) {
+        return transactionService.getFilteredTransactions(transactionSearchInfoBean);
     }
 
     @GetMapping("/{id}")
@@ -37,5 +48,12 @@ public class TransactionController {
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void cancelTransaction(@PathVariable Long transactionId, @RequestBody String username) throws ResourceNotFoundException {
         transactionService.cancelTransaction(transactionId, username);
+    }
+
+    @PostMapping(value = "/filtered/excel", produces = "application/csv")
+    @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
+    @ResponseStatus(HttpStatus.OK)
+    public void generateExcelOfTransactions(@RequestBody TransactionSearchInfoBean bean, HttpServletResponse response) throws IOException {
+        excelService.generateExcelOfTransactions(bean, response);
     }
 }
