@@ -32,7 +32,7 @@ public class TransactionController {
     @PostMapping("/filtered")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    public List<TransactionBean> getFilteredTransactions(@RequestBody TransactionSearchInfoBean transactionSearchInfoBean) {
+    public List<TransactionBean> getFilteredTransactions(@RequestBody TransactionSearchInfoBean transactionSearchInfoBean) throws ResourceNotFoundException {
         return transactionService.getFilteredTransactions(transactionSearchInfoBean);
     }
 
@@ -53,7 +53,7 @@ public class TransactionController {
     @PostMapping(value = "/filtered/excel", produces = "application/csv")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     @ResponseStatus(HttpStatus.OK)
-    public void generateExcelOfTransactions(@RequestBody TransactionSearchInfoBean bean, HttpServletResponse response) throws IOException {
+    public void generateExcelOfTransactions(@RequestBody TransactionSearchInfoBean bean, HttpServletResponse response) throws IOException, ResourceNotFoundException {
         excelService.generateExcelOfTransactions(bean, response);
     }
 }
