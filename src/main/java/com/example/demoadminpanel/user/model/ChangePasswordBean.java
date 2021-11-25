@@ -6,4 +6,5 @@ import lombok.Data;
 public class ChangePasswordBean {
     private String oldPassword;
     private String newPassword;
+    private String newPasswordDub;
 }

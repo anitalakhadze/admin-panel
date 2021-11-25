@@ -1,7 +1,7 @@
 package com.example.demoadminpanel.user.controller;
 
 import com.example.demoadminpanel.excel.ExcelService;
-import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
+import com.example.demoadminpanel.exception.customExceptions.GeneralApiException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.user.model.*;
@@ -60,8 +60,7 @@ public class UserController {
 
     @PutMapping("/password/{username}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    @ResponseStatus(HttpStatus.OK)
-    public void updatePassword(@PathVariable("username") String username, @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, ForbiddenRequestException {
+    public void updatePassword(@PathVariable("username") String username, @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, GeneralApiException {
         userService.updatePassword(username, changePasswordBean);
     }
 

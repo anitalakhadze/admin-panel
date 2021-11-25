@@ -1,6 +1,7 @@
 package com.example.demoadminpanel.user.service.impl;
 
 import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
+import com.example.demoadminpanel.exception.customExceptions.GeneralApiException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.security.RevokeUserTokenEvent;
@@ -89,16 +90,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void updatePassword(String username, ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, ForbiddenRequestException {
+    public void updatePassword(String username, ChangePasswordBean bean) throws ResourceNotFoundException, GeneralApiException {
         User user = userRepository
                 .findByUsername(username)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User with username: %s not found", username)));
-        if (passwordEncoder.matches(changePasswordBean.getOldPassword(), user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(changePasswordBean.getNewPassword()));
-            userRepository.save(user);
+        if (!passwordEncoder.matches(bean.getOldPassword(), user.getPassword())) {
+            throw new GeneralApiException("თქვენ მიერ შეყვანილი პაროლი არასწორია. გთხოვთ, სცადოთ კიდევ ერთხელ.");
+        } else if (!bean.getNewPassword().equals(bean.getNewPasswordDub())) {
+            throw new GeneralApiException("ახალი და განმეორებით შეყვანილი პაროლები არ ემთხვევა ერთმანეთს");
         } else {
-            throw new ForbiddenRequestException("Passwords do not match!");
+            user.setPassword(passwordEncoder.encode(bean.getNewPassword()));
+            userRepository.save(user);
         }
     }
-
 }
