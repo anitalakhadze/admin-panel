@@ -3,13 +3,13 @@ package com.example.demoadminpanel.excel.impl;
 import com.example.demoadminpanel.excel.ExcelService;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.model.TransactionBean;
-import com.example.demoadminpanel.transaction.model.TransactionDetails;
+import com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails;
 import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
 import com.example.demoadminpanel.transaction.service.TransactionService;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.streaming.SXSSFRow;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
@@ -34,8 +34,8 @@ public class ExcelServiceImpl implements ExcelService {
     }
 
     @Override
-    public void generateExcelOfTransactions(TransactionSearchInfoBean transactionSearchInfoBean, HttpServletResponse response) throws ResourceNotFoundException {
-        List<TransactionBean> filteredTransactions = transactionService.getFilteredTransactions(transactionSearchInfoBean);
+    public void generateExcelOfTransactions(TransactionSearchInfoBean bean, HttpServletResponse response) throws ResourceNotFoundException {
+        List<TransactionBeanWithUserDetails> filteredTransactions = transactionService.getFilteredTransactionsWithDetails(bean);
         List<String> headerRow = getTransactionsHeaderRow();
         List<List<String>> transactionRows = getTransactionsDataRows(filteredTransactions);
         generateExcel("ტრანზაქციების ისტორია", "ტრანზაქციები.xlsx", headerRow, transactionRows, response);
@@ -59,7 +59,8 @@ public class ExcelServiceImpl implements ExcelService {
                 "ინვოისის მონაცემები",
                 "თარიღი",
                 "გადახდის მეთოდი",
-                "სტატუსი"));
+                "სტატუსი",
+                "კომპანიის დასახელება"));
     }
 
     private List<List<String>> getCompaniesDataRows(List<User> companies) {
@@ -70,10 +71,10 @@ public class ExcelServiceImpl implements ExcelService {
         return companyRows;
     }
 
-    private List<List<String>> getTransactionsDataRows(List<TransactionBean> filteredTransactions) {
+    private List<List<String>> getTransactionsDataRows(List<TransactionBeanWithUserDetails> filteredTransactions) {
         List<List<String>> transactionRows = new ArrayList<>();
-        for (TransactionBean transactionBean : filteredTransactions) {
-            transactionRows.add(getTransactionsRowInfo(transactionBean));
+        for (TransactionBeanWithUserDetails bean : filteredTransactions) {
+            transactionRows.add(getTransactionsRowInfo(bean));
         }
         return transactionRows;
     }
@@ -87,15 +88,15 @@ public class ExcelServiceImpl implements ExcelService {
                 company.getAddedAt() == null ? "" : company.getAddedAt().toString()));
     }
 
-    private List<String> getTransactionsRowInfo(TransactionBean transactionBean) {
-        TransactionDetails details = transactionBean.getDetails();
-        return new ArrayList<>(Arrays.asList(transactionBean.getId().toString(),
-                transactionBean.getAmount().toString(),
-                transactionBean.getCommission().toString(),
-                transactionBean.getInvoiceData(),
-                transactionBean.getDateCreated().toString(),
-                details.getPaymentSource(),
-                details.getStatus()));
+    private List<String> getTransactionsRowInfo(TransactionBeanWithUserDetails bean) {
+        return new ArrayList<>(Arrays.asList(String.valueOf(bean.getId()),
+                String.valueOf(bean.getAmount()),
+                String.valueOf(bean.getCommission()),
+                bean.getInvoiceData(),
+                bean.getDateCreated().toString(),
+                TransactionBean.getPaymentMethod(bean.getPaymentSource()),
+                TransactionBean.getPaymentStatus(bean.getStatus()),
+                bean.getCompanyName()));
     }
 
     private void generateExcel(String sheetName, String filename,

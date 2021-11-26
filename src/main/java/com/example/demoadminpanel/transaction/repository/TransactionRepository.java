@@ -1,6 +1,7 @@
 package com.example.demoadminpanel.transaction.repository;
 
 import com.example.demoadminpanel.transaction.entity.Transaction;
+import com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -9,24 +10,16 @@ import java.util.List;
 
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
 
-    @Query(value =
-            " select * from admin_panel.transaction t " +
-                    "left join admin_panel.user u " +
-                    "ON t.ip = u.ip_address " +
-                    "where t.date_created >= :startDate " +
-                    "and t.date_created <= :endDate " +
-                    "AND u.id = :companyId "
-            , nativeQuery = true)
-    List<Transaction> getTransactionsByRange(Long companyId, Date startDate, Date endDate);
+    @Query(value = "select new com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails" +
+            "(t.id, t.amount, t.commission, t.dateCreated, t.invoiceData, u.id, u.name, t.status, t.moneySource) " +
+                    "from Transaction t left join User u ON t.ip = u.ipAddress " +
+                    "where t.dateCreated >= :startDate and t.dateCreated <= :endDate AND u.id = :companyId ")
+    List<TransactionBeanWithUserDetails> getTransactionsBetweenRange(Long companyId, Date startDate, Date endDate);
 
-    @Query(value =
-            " select * from admin_panel.transaction t " +
-                    "left join admin_panel.user u " +
-                    "ON t.ip = u.ip_address " +
-                    "where t.date_created >= :startDate " +
-                    "and t.date_created <= :endDate " +
-                    "AND u.id in (:companyIds) "
-            , nativeQuery = true)
-    List<Transaction> getTransactionsByCompanyIdAndRange(List<Long> companyIds, Date startDate, Date endDate);
+    @Query(value = "select new com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails" +
+                    "(t.id, t.amount, t.commission, t.dateCreated, t.invoiceData, u.id, u.name, t.status, t.moneySource) " +
+                    "from Transaction t left join User u ON t.ip = u.ipAddress " +
+                    "where t.dateCreated >= :startDate and t.dateCreated <= :endDate AND u.id in (:companyIds) ")
+    List<TransactionBeanWithUserDetails> getTransactionsUsingCompanyIdAndRange(List<Long> companyIds, Date startDate, Date endDate);
 
 }

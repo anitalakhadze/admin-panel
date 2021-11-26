@@ -33,6 +33,21 @@ public class TransactionBean {
                 .build();
     }
 
+    public static TransactionBean transformFromTransactionBeanWithUserDetails(TransactionBeanWithUserDetails bean) {
+        return TransactionBean.builder()
+                .amount(bean.getAmount())
+                .commission(bean.getCommission())
+                .id(bean.getId())
+                .invoiceData(bean.getInvoiceData())
+                .dateCreated((Date) bean.getDateCreated())
+                .details(TransactionDetails.builder()
+                        .userId(bean.getUserId())
+                        .paymentSource(getPaymentMethod(bean.getPaymentSource()))
+                        .status(getPaymentStatus(bean.getStatus()))
+                        .eCommerceCompanyName(bean.getCompanyName()).build())
+                .build();
+    }
+
     public static String getPaymentMethod(Integer statusId) {
         switch (statusId) {
             case 1:

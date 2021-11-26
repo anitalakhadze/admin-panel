@@ -11,4 +11,5 @@ public class TransactionDetails {
     private Long userId;
     private String paymentSource;
     private String status;
+    private String eCommerceCompanyName;
 }

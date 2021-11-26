@@ -4,6 +4,7 @@ import com.example.demoadminpanel.email.EmailSender;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.entity.Transaction;
 import com.example.demoadminpanel.transaction.model.TransactionBean;
+import com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails;
 import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
 import com.example.demoadminpanel.transaction.repository.TransactionRepository;
 import com.example.demoadminpanel.transaction.service.TransactionService;
@@ -34,25 +35,27 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public List<TransactionBean> getFilteredTransactions(TransactionSearchInfoBean transactionSearchInfoBean) throws ResourceNotFoundException {
-        Date startDate = transactionSearchInfoBean.getStartDate();
-        Date endDate = transactionSearchInfoBean.getEndDate();
-        List<Long> companyIds = transactionSearchInfoBean.getCompanyIds();
+        return getFilteredTransactionsWithDetails(transactionSearchInfoBean)
+                .stream()
+                .map(TransactionBean::transformFromTransactionBeanWithUserDetails)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TransactionBeanWithUserDetails> getFilteredTransactionsWithDetails(TransactionSearchInfoBean bean) throws ResourceNotFoundException {
+        Date startDate = bean.getStartDate();
+        Date endDate = bean.getEndDate();
+        List<Long> companyIds = bean.getCompanyIds();
         if (!companyIds.isEmpty()) {
             return transactionRepository
-                    .getTransactionsByCompanyIdAndRange(companyIds, startDate, endDate)
-                    .stream()
-                    .map(TransactionBean::transformFromTransactionEntity)
-                    .collect(Collectors.toList());
+                    .getTransactionsUsingCompanyIdAndRange(companyIds, startDate, endDate);
         } else {
-            String username = transactionSearchInfoBean.getUsername();
+            String username = bean.getUsername();
             User user = userRepository
                     .findByUsername(username)
                     .orElseThrow(() -> new ResourceNotFoundException(String.format("User with username: %s not found", username)));
             return transactionRepository
-                    .getTransactionsByRange(user.getId(), startDate, endDate)
-                    .stream()
-                    .map(TransactionBean::transformFromTransactionEntity)
-                    .collect(Collectors.toList());
+                    .getTransactionsBetweenRange(user.getId(), startDate, endDate);
         }
     }
 
