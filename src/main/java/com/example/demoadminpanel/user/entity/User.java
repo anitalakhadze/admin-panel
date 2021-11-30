@@ -8,6 +8,7 @@ import java.util.Date;
 
 @Data
 @Entity
+@Table(name="\"User\"")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
