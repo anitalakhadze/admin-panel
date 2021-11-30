@@ -12,6 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,14 +41,14 @@ public class UserController {
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody CreateUserRequest request) throws ResourceAlreadyExistsException {
+    public Long create(@RequestBody @Valid CreateUserRequest request) throws ResourceAlreadyExistsException {
         return userService.createUser(request);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void update (@PathVariable("id") Long id, @RequestBody UpdateUserRequest request) throws ResourceNotFoundException {
+    public void update (@PathVariable("id") Long id, @RequestBody @Valid UpdateUserRequest request) throws ResourceNotFoundException {
         userService.updateUser(id, request);
     }
 
