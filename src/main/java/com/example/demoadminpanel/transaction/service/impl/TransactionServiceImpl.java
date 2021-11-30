@@ -72,7 +72,7 @@ public class TransactionServiceImpl implements TransactionService {
         Transaction transaction = transactionRepository
                 .findById(transactionId)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("Transaction with id %s was not found", transactionId)));
-        emailSender.send("atala15@freeuni.edu.ge", "ტრანზაქციის გაუქმება", getTransactionCancellationText(transaction, username));
+        emailSender.send("a.talakhadze@oppa.ge", "ტრანზაქციის გაუქმება", getTransactionCancellationText(transaction, username));
     }
 
     private String getTransactionCancellationText(Transaction transaction, String username) {
@@ -84,6 +84,6 @@ public class TransactionServiceImpl implements TransactionService {
                 "<li>ტრანზაქციის შექმნის თარიღი: " + transaction.getDateCreated() + "</li>\n" +
                 "<li>ინვოისის მონაცემები: " + transaction.getInvoiceData() + "</li>\n" +
                 "<li>ტერმინალის ID: " + transaction.getTerminalId() + "</li>\n" +
-                "<li>ტრანზაქციის ID: " + transaction.getTransactionId() + "</li></ul><body></html>\n";
+                "<li>ოპპას ტრანზაქციის ID: " + transaction.getTransactionId() + "</li></ul><body></html>\n";
     }
 }
