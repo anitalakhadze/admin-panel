@@ -15,12 +15,13 @@ public class UpdateUserRequest {
 
     @Size(max = 25, message = "IPAddress should be less than 20 characters")
     @Pattern(regexp = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",
-            message = "Incorrect Format")
+            message = "Incorrect format for IP Address")
     @NotNull(message = "IPAddress should not be null")
     private String ipAddress;
 
     @Size(max = 100, message = "ReturnURL should be less than 20 characters")
-    @Pattern(regexp = "(https?://)?([\\\\da-z.-]+)\\.([a-z.]{2,6})[/\\\\w .-]*/?", message = "Incorrect Format")
+    @Pattern(regexp = "(https?://)?([\\\\da-z.-]+)\\.([a-z.]{2,6})[/\\\\w .-]*/?",
+            message = "Incorrect format for Return URL")
     @NotNull(message = "ReturnURL should not be null")
     private String returnUrl;
 

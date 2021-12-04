@@ -41,14 +41,14 @@ public class UserController {
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody @Valid CreateUserRequest request) throws ResourceAlreadyExistsException {
+    public Long create( @Valid @RequestBody CreateUserRequest request) throws ResourceAlreadyExistsException {
         return userService.createUser(request);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void update (@PathVariable("id") Long id, @RequestBody @Valid UpdateUserRequest request) throws ResourceNotFoundException {
+    public void update (@PathVariable("id") Long id, @Valid @RequestBody UpdateUserRequest request) throws ResourceNotFoundException {
         userService.updateUser(id, request);
     }
 
@@ -61,7 +61,7 @@ public class UserController {
 
     @PutMapping("/password/{username}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public void updatePassword(@PathVariable("username") String username, @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, GeneralApiException {
+    public void updatePassword(@PathVariable("username") String username, @Valid @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, GeneralApiException {
         userService.updatePassword(username, changePasswordBean);
     }
 
