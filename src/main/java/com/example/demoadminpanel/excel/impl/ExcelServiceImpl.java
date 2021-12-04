@@ -48,7 +48,8 @@ public class ExcelServiceImpl implements ExcelService {
                 "IP მისამართი",
                 "საიტის URL",
                 "სტატუსი",
-                "დამატების თარიღი"));
+                "დამატების თარიღი",
+                "როლი"));
     }
 
     private List<String> getTransactionsHeaderRow() {
@@ -85,7 +86,8 @@ public class ExcelServiceImpl implements ExcelService {
                 company.getIpAddress(),
                 company.getReturnUrl(),
                 company.getIsActive() ? "აქტიური" : "არააქტიური",
-                company.getAddedAt() == null ? "" : company.getAddedAt().toString()));
+                company.getAddedAt() == null ? "" : company.getAddedAt().toString(),
+                company.getRole().name().equals("ROLE_ADMIN") ? "ადმინისტრატორი" : "მომხმარებელი"));
     }
 
     private List<String> getTransactionsRowInfo(TransactionBeanWithUserDetails bean) {
