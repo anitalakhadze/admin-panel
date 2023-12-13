@@ -8,6 +8,7 @@ import com.example.demoadminpanel.user.model.*;
 import com.example.demoadminpanel.user.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,41 +28,42 @@ public class UserController {
     @GetMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public List<UserListResponse> getUsers() {
-        return userService.getUsers();
+    public ResponseEntity<List<UserListResponse>> getUsers() {
+        return ResponseEntity.ok(userService.getUsers());
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public UserDetailedResponse getUser(@PathVariable("id") Long id) throws ResourceNotFoundException {
-        return userService.getUser(id);
+    public ResponseEntity<UserDetailedResponse> getUser(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(userService.getUser(id));
     }
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create( @Valid @RequestBody CreateUserRequest request) throws ResourceAlreadyExistsException {
-        return userService.createUser(request);
+    public ResponseEntity<Long> create( @Valid @RequestBody CreateUserRequest request) {
+        return new ResponseEntity<>(userService.createUser(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void update (@PathVariable("id") Long id, @Valid @RequestBody UpdateUserRequest request) throws ResourceNotFoundException {
+    public void update (@PathVariable("id") Long id, @Valid @RequestBody UpdateUserRequest request) {
         userService.updateUser(id, request);
     }
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteUser(@PathVariable("id") Long id) throws ResourceNotFoundException {
+    public void deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
     }
 
     @PutMapping("/password/{username}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
-    public void updatePassword(@PathVariable("username") String username, @Valid @RequestBody ChangePasswordBean changePasswordBean) throws ResourceNotFoundException, GeneralApiException {
+    public void updatePassword(@PathVariable("username") String username,
+                               @Valid @RequestBody ChangePasswordBean changePasswordBean)  {
         userService.updatePassword(username, changePasswordBean);
     }
 
