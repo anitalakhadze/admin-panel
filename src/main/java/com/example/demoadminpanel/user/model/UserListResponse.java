@@ -22,7 +22,7 @@ public class UserListResponse {
         userListResponse.setName(user.getName());
         userListResponse.setIpAddress(user.getIpAddress());
         userListResponse.setReturnUrl(user.getReturnUrl());
-        userListResponse.setIsActive(user.getIsActive() ? "აქტიური" : "არააქტიური");
+        userListResponse.setIsActive(user.getIsActive() ? "Active" : "Inactive");
         userListResponse.setAddedAt(user.getAddedAt());
         userListResponse.setUserRole(user.getRole());
         return userListResponse;

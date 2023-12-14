@@ -6,9 +6,15 @@ import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundExc
 import java.util.List;
 
 public interface CompanyService {
+
     List<CompanyBean> getActiveCompanies();
+
     List<CompanyBean> getInactiveCompanies();
+
     List<CompanyBean> getAllCompanies();
+
     void deactivateByCompanyId(Long companyId) throws ResourceNotFoundException;
+
     void saveAll(List<Long> companyIds) throws ResourceNotFoundException;
+
 }
