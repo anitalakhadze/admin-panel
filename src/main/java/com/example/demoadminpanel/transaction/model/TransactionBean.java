@@ -1,6 +1,8 @@
 package com.example.demoadminpanel.transaction.model;
 
 import com.example.demoadminpanel.transaction.entity.Transaction;
+import com.example.demoadminpanel.transaction.model.enums.PaymentMethod;
+import com.example.demoadminpanel.transaction.model.enums.PaymentStatus;
 import lombok.*;
 
 import java.sql.Date;
@@ -51,26 +53,26 @@ public class TransactionBean {
     public static String getPaymentMethod(Integer statusId) {
         switch (statusId) {
             case 1:
-                return "ბარათი";
+                return PaymentMethod.CARD.getValue();
             case 2:
-                return "შენახული ბარათი";
+                return PaymentMethod.SAVED_CARD.getValue();
             case 3:
-                return "საფულე";
+                return PaymentMethod.WALLET.getValue();
             case 4:
-                return "ყულაბა";
+                return PaymentMethod.PIGGY_BANK.getValue();
             default:
-                return "";
+                return PaymentMethod.NO_METHOD_FOUND.getValue();
         }
     }
 
     public static String getPaymentStatus(Integer status) {
         switch (status) {
             case 1:
-                return "წარმატებული";
+                return PaymentStatus.SUCCESS.getValue();
             case 4:
-                return "წარუმატებელი";
+                return PaymentStatus.FAILED.getValue();
             default:
-                return "პროცესშია";
+                return PaymentStatus.PENDING.getValue();
         }
     }
 

@@ -31,10 +31,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (!userOptional.isPresent()) {
             throw new ResourceNotFoundException(String.format("User with username: %s not found", username));
         }
+
         User user = userOptional.get();
         List<SimpleGrantedAuthority> authorityList = Collections
                 .singletonList(new SimpleGrantedAuthority(user.getRole().name()));
-        emailSender.send("a.talakhadze@oppa.ge", "USER LOGIN", String.format("%s has logged in your app!", user.getUsername().toUpperCase()));
+
+        // TODO: 12/24/23 not a necessary operation, just for testing purposes
+//        emailSender.send("a.talakhadze@oppa.ge", "USER LOGIN", String.format("%s has logged in your app!", user.getUsername().toUpperCase()));
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

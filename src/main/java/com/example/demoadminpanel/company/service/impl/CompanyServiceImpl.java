@@ -19,7 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyBean> getActiveCompanies() {
-        List<User> activeCompaniesList = userRepository.findUsersByIsActiveIsTrue();
+        List<User> activeCompaniesList = userRepository.findUsersByIsActive(true);
         return activeCompaniesList
                 .stream()
                 .map(CompanyBean::transformFromUser)
@@ -28,7 +28,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public List<CompanyBean> getInactiveCompanies() {
-        List<User> inactiveCompaniesList = userRepository.findUsersByIsActiveIsFalse();
+        List<User> inactiveCompaniesList = userRepository.findUsersByIsActive(false);
         return inactiveCompaniesList
                 .stream()
                 .map(CompanyBean::transformFromUser)
