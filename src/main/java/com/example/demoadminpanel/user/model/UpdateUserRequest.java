@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 public class UpdateUserRequest {
 
-    @Size(min = 2, max = 25, message = "name-Name should be {min}-{max} characters long.")
+    @Size(min = 2, max = 25, message = "name-Name should be between {min} {max} characters long.")
     @NotBlank(message = "name-Name should not be blank.")
     private String name;
 

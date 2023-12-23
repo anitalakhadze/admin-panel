@@ -13,11 +13,11 @@ import javax.validation.constraints.Size;
 public class CreateUserRequest {
 
     @NotBlank(message = "name-Name should not be blank.")
-    @Size(min = 2, max = 25, message = "name-Name should be {min}-{max} characters long.")
+    @Size(min = 2, max = 25, message = "name-Name should be between {min} {max} characters long.")
     private String name;
 
     @NotBlank(message = "username-Username should not be blank.")
-    @Size(min = 2, max = 20, message = "username-Username should be {min}-{max} characters long.")
+    @Size(min = 2, max = 20, message = "username-Username should be between {min} and {max} characters long.")
     private String username;
 
     @NotBlank(message = "password-Password should not be blank.")
@@ -25,7 +25,7 @@ public class CreateUserRequest {
             regexp = "^[A-Za-z0-9\\s!@#$%^&*()_+=-`~\\\\\\]\\[{}|';:/.,?><]*$",
             message = "password-Incorrect Format for password."
     )
-    @Size(min = 8, max = 20, message = "password-Password should be {min}-{max} characters long.")
+    @Size(min = 8, max = 20, message = "password-Password should be between {min}{max} characters long.")
     private String password;
 
     @NotBlank(message = "ipAddress-IPAddress should not be blank.")
