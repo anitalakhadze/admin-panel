@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,6 +24,7 @@ import java.util.stream.Collectors;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
     private final ApplicationEventPublisher applicationEventPublisher;
 
     public List<UserListResponse> getUsers() {
@@ -54,16 +54,7 @@ public class UserService {
             throw new ResourceAlreadyExistsException(String.format("User with username: %s already exists", request.getUsername()));
         }
 
-        User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(request.getRole());
-        user.setName(request.getName());
-        user.setIpAddress(request.getIpAddress());
-        user.setReturnUrl(request.getReturnUrl());
-        user.setIsActive(request.getStatus().name().equals("ACTIVE"));
-        user.setAddedAt(new Date());
-        userRepository.save(user);
+        User user = userRepository.save(userMapper.fromCreateRequestToUser(request));
 
         return user.getId();
     }
@@ -76,11 +67,7 @@ public class UserService {
                 .findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User with id: %s not found", id)));
 
-        user.setName(request.getName());
-        user.setIpAddress(request.getIpAddress());
-        user.setReturnUrl(request.getReturnUrl());
-        user.setRole(request.getRole());
-        userRepository.save(user);
+        userRepository.save(userMapper.fromUpdateRequestToUser(user, request));
     }
 
     @Transactional
@@ -105,12 +92,16 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException(String.format("User with username: %s not found", username)));
 
         if (!passwordEncoder.matches(bean.getOldPassword(), user.getPassword())) {
+            log.error("Old password is incorrect.");
             throw new GeneralApiException("Old password is incorrect.");
-        } else if (!bean.getNewPassword().equals(bean.getNewPasswordDub())) {
-            throw new GeneralApiException("New and repeated passwords do not match.");
-        } else {
-            user.setPassword(passwordEncoder.encode(bean.getNewPassword()));
-            userRepository.save(user);
         }
+
+        if (!bean.getNewPassword().equals(bean.getNewPasswordDub())) {
+            log.error("New and repeated passwords do not match.");
+            throw new GeneralApiException("New and repeated passwords do not match.");
+        }
+
+        user.setPassword(passwordEncoder.encode(bean.getNewPassword()));
+        userRepository.save(user);
     }
 }
