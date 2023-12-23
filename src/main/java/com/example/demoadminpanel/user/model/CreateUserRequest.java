@@ -28,7 +28,7 @@ public class CreateUserRequest {
     @Size(min = 8, max = 20, message = "Password should be {min}-{max} characters long.")
     private String password;
 
-    @NotNull(message = "IPAddress is mandatory.")
+    @NotBlank(message = "IPAddress should not be blank.")
     @Pattern(
             regexp = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)",
             message = "Incorrect Format for IP Address."
@@ -36,7 +36,7 @@ public class CreateUserRequest {
     @Size(max = 25, message = "Max length for IP Address is {max} characters.")
     private String ipAddress;
 
-    @NotNull(message = "ReturnURL should not be null")
+    @NotBlank(message = "ReturnURL should not be blank.")
     @Pattern(
             regexp = "(https?://)?([\\\\da-z.-]+)\\.([a-z.]{2,6})[/\\\\w .-]*/?",
             message = "Incorrect Format for Return URL."
