@@ -84,7 +84,7 @@ public class UserService {
     }
 
     @Transactional
-    public void updatePassword(String username, ChangePasswordBean bean) {
+    public void updatePassword(String username, ChangePasswordRequest bean) {
         log.debug("Updating password for user with username: {}", username);
 
         User user = userRepository

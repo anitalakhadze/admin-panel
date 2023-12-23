@@ -1,12 +1,8 @@
 package com.example.demoadminpanel.user.controller;
 
 import com.example.demoadminpanel.excel.ExcelService;
-import com.example.demoadminpanel.exception.customExceptions.GeneralApiException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.user.model.*;
 import com.example.demoadminpanel.user.service.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,8 +55,8 @@ public class UserController {
     @PutMapping("/password/{username}")
     @PreAuthorize("hasAnyRole('ADMIN', 'USER')")
     public void updatePassword(@PathVariable("username") String username,
-                               @Valid @RequestBody ChangePasswordBean changePasswordBean)  {
-        userService.updatePassword(username, changePasswordBean);
+                               @Valid @RequestBody ChangePasswordRequest changePasswordRequest)  {
+        userService.updatePassword(username, changePasswordRequest);
     }
 
     @PostMapping(value = "/excel", produces = "application/csv")
