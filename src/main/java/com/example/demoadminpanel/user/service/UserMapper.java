@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -23,8 +23,8 @@ public class UserMapper {
         user.setName(request.getName());
         user.setIpAddress(request.getIpAddress());
         user.setReturnUrl(request.getReturnUrl());
-        user.setIsActive(request.getStatus().name().equals("ACTIVE"));
-        user.setAddedAt(new Date());
+        user.setStatus(request.getStatus());
+        user.setRegisteredAt(LocalDateTime.now());
         return  user;
     }
 

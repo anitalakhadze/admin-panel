@@ -7,6 +7,7 @@ import com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetai
 import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
 import com.example.demoadminpanel.transaction.service.TransactionService;
 import com.example.demoadminpanel.user.entity.User;
+import com.example.demoadminpanel.user.model.enums.UserStatus;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.apache.poi.ss.usermodel.Cell;
@@ -85,8 +86,8 @@ public class ExcelServiceImpl implements ExcelService {
                 company.getName(),
                 company.getIpAddress(),
                 company.getReturnUrl(),
-                company.getIsActive() ? "აქტიური" : "არააქტიური",
-                company.getAddedAt() == null ? "" : company.getAddedAt().toString(),
+                company.getStatus().equals(UserStatus.ACTIVE) ? "ACTIVE" : "INACTIVE",
+                company.getRegisteredAt() == null ? "" : company.getRegisteredAt().toString(),
                 company.getRole().name().equals("ROLE_ADMIN") ? "ადმინისტრატორი" : "მომხმარებელი"));
     }
 
