@@ -1,0 +1,2 @@
+INSERT INTO admin_panel_users (name, username, password, ip_address, return_url, role, status, registered_at)
+VALUES ('admin', 'admin', 'password', '127.0.0.1', 'https://example.com', 'ADMIN', 'ACTIVE', CURRENT_TIMESTAMP);
