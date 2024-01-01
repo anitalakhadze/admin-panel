@@ -2,8 +2,8 @@ package com.example.demoadminpanel.excel;
 
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.model.TransactionSearchInfoBean;
+import jakarta.servlet.http.HttpServletResponse;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ExcelService {

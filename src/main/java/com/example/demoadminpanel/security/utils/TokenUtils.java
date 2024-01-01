@@ -7,12 +7,12 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
