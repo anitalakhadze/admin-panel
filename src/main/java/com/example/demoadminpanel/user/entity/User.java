@@ -2,9 +2,9 @@ package com.example.demoadminpanel.user.entity;
 
 import com.example.demoadminpanel.user.model.enums.UserRole;
 import com.example.demoadminpanel.user.model.enums.UserStatus;
+import jakarta.persistence.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Data

@@ -1,8 +1,8 @@
 package com.example.demoadminpanel.transaction.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
 import java.sql.Date;
 
 @Getter
@@ -12,6 +12,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @Entity
 public class Transaction {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -90,4 +91,5 @@ public class Transaction {
 
     @Column(name = "FAV_ID")
     private Long favId;
+
 }

@@ -22,13 +22,13 @@ import java.util.Optional;
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
-    private final EmailSender emailSender;
+//    private final EmailSender emailSender;
 
     @SneakyThrows
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userOptional = userRepository.findByUsername(username);
-        if (!userOptional.isPresent()) {
+        if (userOptional.isEmpty()) {
             throw new ResourceNotFoundException(String.format("User with username: %s not found", username));
         }
 
