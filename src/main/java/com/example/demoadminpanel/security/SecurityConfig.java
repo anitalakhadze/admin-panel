@@ -1,7 +1,7 @@
 package com.example.demoadminpanel.security;
 
 import com.example.demoadminpanel.security.filter.CustomAuthenticationFilter;
-import com.example.demoadminpanel.security.filter.CustomAuthorizationFilter;
+import com.example.demoadminpanel.security.filter.TokenAuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +43,7 @@ public class SecurityConfig {
         );
 
         http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new TokenAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 //                .logout()
 //                    .invalidateHttpSession(true)
 //                    .clearAuthentication(true).permitAll();
