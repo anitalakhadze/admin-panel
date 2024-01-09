@@ -12,10 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class EmailService implements EmailSender {
+public class EmailService {
     private final JavaMailSender mailSender;
 
-    @Override
     @Async
     public void send(String to, String subject, String emailText) {
         try {

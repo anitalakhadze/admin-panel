@@ -22,6 +22,7 @@ public class CompanyService {
 
     public List<CompanyBean> getCompanies(List<UserStatus> statuses) {
         log.debug("Getting companies with statuses: {}", statuses);
+
         List<User> companiesList = userRepository.findUsersByStatusIn(statuses);
         return companiesList
                 .stream()
@@ -44,6 +45,7 @@ public class CompanyService {
     @Transactional
     public void saveCompanies(List<Long> companyIds) {
         if (CollectionUtils.isEmpty(companyIds)) {
+            log.error("Company ID list was null or empty");
             throw new RuntimeException("Company ID list was null or empty");
         }
 
