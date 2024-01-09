@@ -1,6 +1,5 @@
 package com.example.demoadminpanel.user.service.impl;
 
-import com.example.demoadminpanel.email.EmailSender;
 import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
@@ -22,7 +21,7 @@ import java.util.Optional;
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
     private final UserRepository userRepository;
-//    private final EmailSender emailSender;
+//    private final EmailService emailService;
 
     @SneakyThrows
     @Override
@@ -37,7 +36,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .singletonList(new SimpleGrantedAuthority(user.getRole().name()));
 
         // TODO: 12/24/23 not a necessary operation, just for testing purposes
-//        emailSender.send("a.talakhadze@oppa.ge", "USER LOGIN", String.format("%s has logged in your app!", user.getUsername().toUpperCase()));
+//        emailService.send("a.talakhadze@oppa.ge", "USER LOGIN", String.format("%s has logged in your app!", user.getUsername().toUpperCase()));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
