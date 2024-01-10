@@ -1,7 +1,7 @@
 package com.example.demoadminpanel.transaction.service;
 
 import com.example.demoadminpanel.email.EmailService;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import com.example.demoadminpanel.transaction.entity.Transaction;
 import com.example.demoadminpanel.transaction.model.TransactionBean;
 import com.example.demoadminpanel.transaction.model.TransactionBeanWithUserDetails;

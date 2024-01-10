@@ -1,6 +1,6 @@
 package com.example.demoadminpanel.user.service.impl;
 
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import lombok.AllArgsConstructor;

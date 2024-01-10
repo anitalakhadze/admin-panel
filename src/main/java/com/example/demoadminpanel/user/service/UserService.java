@@ -1,8 +1,8 @@
 package com.example.demoadminpanel.user.service;
 
-import com.example.demoadminpanel.exception.customExceptions.GeneralApiException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.GeneralApiException;
+import com.example.demoadminpanel.exception.custom.ResourceAlreadyExistsException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import com.example.demoadminpanel.security.RevokeUserTokenEvent;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.model.*;

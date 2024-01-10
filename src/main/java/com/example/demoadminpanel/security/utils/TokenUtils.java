@@ -4,7 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
