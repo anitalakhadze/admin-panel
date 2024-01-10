@@ -1,4 +1,4 @@
-package com.example.demoadminpanel.exception.customExceptions;
+package com.example.demoadminpanel.exception.custom;
 
 public class ResourceAlreadyExistsException extends RuntimeException {
 

@@ -1,7 +1,7 @@
 package com.example.demoadminpanel.company.service;
 
 import com.example.demoadminpanel.company.model.CompanyBean;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import com.example.demoadminpanel.user.entity.User;
 import com.example.demoadminpanel.user.model.enums.UserStatus;
 import com.example.demoadminpanel.user.repository.UserRepository;

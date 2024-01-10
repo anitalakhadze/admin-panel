@@ -1,9 +1,9 @@
 package com.example.demoadminpanel.exception;
 
-import com.example.demoadminpanel.exception.customExceptions.ForbiddenRequestException;
-import com.example.demoadminpanel.exception.customExceptions.GeneralApiException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceAlreadyExistsException;
-import com.example.demoadminpanel.exception.customExceptions.ResourceNotFoundException;
+import com.example.demoadminpanel.exception.custom.ForbiddenRequestException;
+import com.example.demoadminpanel.exception.custom.GeneralApiException;
+import com.example.demoadminpanel.exception.custom.ResourceAlreadyExistsException;
+import com.example.demoadminpanel.exception.custom.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
